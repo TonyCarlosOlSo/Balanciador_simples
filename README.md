@@ -177,7 +177,7 @@ Contribuições são sempre bem-vindas! Se você quiser melhorar o projeto, adic
 Se tiver dúvidas ou sugestões, entre em contato:
 
 - **GitHub**: [@TonyCarlosOlSo](https://github.com/TonyCarlosOlSo)
-- **Email**: tonycarlos@email.com
+- **Email**: tonycarlosoliso@gmail.com
 
 ---
 
