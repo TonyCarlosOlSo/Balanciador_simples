@@ -86,7 +86,7 @@ A expressão NÃO está balanceada.
 
 ---
 
-## 🧪 Casos de Teste
+## Casos de Teste
 
 | Expressão                     | Resultado Esperado |
 |-------------------------------|--------------------|
