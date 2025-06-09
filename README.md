@@ -1,4 +1,3 @@
-Claro! Aqui está um **README.md** completo e bem estruturado para seu projeto, ideal para ser usado no GitHub. Ele explica o funcionamento do código, suas funcionalidades, como executar e os conceitos envolvidos.
 
 ---
 
