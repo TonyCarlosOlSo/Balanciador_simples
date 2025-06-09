@@ -16,17 +16,17 @@ void initializeStack(Stack *s) {
     s->top = -1;
 }
 
-// Função para verificar se a pilha está vazia
+// Verifica se a pilha está vazia
 int isEmpty(Stack *s) {
     return s->top == -1;
 }
 
-// Função para verificar se a pilha está cheia
+// Verifica se a pilha está cheia
 int isFull(Stack *s) {
     return s->top == MAX_SIZE - 1;
 }
 
-// Função para empilhar (push) um item
+// Empilha caractere
 void push(Stack *s, char item) {
     if (isFull(s)) {
         printf("Erro: Pilha cheia!\n");
@@ -35,7 +35,7 @@ void push(Stack *s, char item) {
     s->items[++(s->top)] = item;
 }
 
-// Função para desempilhar (pop) um item
+// Desempilha caractere
 char pop(Stack *s) {
     if (isEmpty(s)) {
         return '\0';
@@ -43,7 +43,7 @@ char pop(Stack *s) {
     return s->items[(s->top)--];
 }
 
-// Função para verificar o balanceamento de parênteses, colchetes e chaves
+// Verifica balanceamento de símbolos
 int checkBalance(char* expression) {
     Stack stack;
     initializeStack(&stack);
@@ -52,15 +52,12 @@ int checkBalance(char* expression) {
     for (int i = 0; i < len; i++) {
         char currentChar = expression[i];
 
-        // Se for um caractere de abertura, empilha
         if (currentChar == '(' || currentChar == '[' || currentChar == '{') {
             push(&stack, currentChar);
-        } 
-        else if (currentChar == ')' || currentChar == ']' || currentChar == '}') {
+        } else if (currentChar == ')' || currentChar == ']' || currentChar == '}') {
             if (isEmpty(&stack)) return 0;
 
             char lastOpen = pop(&stack);
-
             if ((currentChar == ')' && lastOpen != '(') ||
                 (currentChar == ']' && lastOpen != '[') ||
                 (currentChar == '}' && lastOpen != '{')) {
@@ -74,7 +71,13 @@ int checkBalance(char* expression) {
 
 // === FUNÇÕES DO CRUD ===
 
-// Listar todas as entradas do arquivo
+// Limpa o buffer de entrada
+void clearInputBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+// Listar todas as expressões
 void listAll() {
     FILE *file = fopen(FILE_NAME, "r");
     if (!file) {
@@ -94,13 +97,16 @@ void listAll() {
 void addExpression() {
     char expression[MAX_SIZE];
     FILE *file = fopen(FILE_NAME, "a");
+
     if (!file) {
         printf("Erro ao abrir o arquivo.\n");
         return;
     }
 
-    printf("Digite uma expressão para verificar: ");
-    scanf(" %[^\n]", expression); // Lê até newline
+    printf("Digite uma expressão: ");
+    clearInputBuffer(); // Limpa antes de ler
+    fgets(expression, MAX_SIZE, stdin);
+    expression[strcspn(expression, "\n")] = 0; // Remove \n
 
     int result = checkBalance(expression);
     printf("Resultado: %s\n", result ? "Balanceada" : "Desbalanceada");
@@ -111,7 +117,7 @@ void addExpression() {
     printf("Expressão adicionada com sucesso!\n");
 }
 
-// Editar uma linha específica
+// Editar linha
 void editLine() {
     FILE *file = fopen(FILE_NAME, "r");
     if (!file) {
@@ -130,25 +136,27 @@ void editLine() {
 
     int choice;
     printf("Escolha o número da linha que deseja editar: ");
-    scanf("%d", &choice);
-
-    if (choice < 1 || choice > count) {
+    if (scanf("%d", &choice) != 1 || choice < 1 || choice > count) {
         printf("Opção inválida.\n");
+        clearInputBuffer();
         return;
     }
 
+    clearInputBuffer(); // Limpa buffer antes de usar fgets
+
     printf("Digite a nova expressão: ");
-    scanf(" %[^\n]", lines[choice - 1] + 12); // Pula "Expressão: "
+    fgets(lines[choice - 1] + 12, 256 - 12, stdin); // Pula "Expressão: "
+    lines[choice - 1][strcspn(lines[choice - 1], "\n")] = 0; // Remove \n
 
     file = fopen(FILE_NAME, "w");
     for (int i = 0; i < count; i++) {
-        fputs(lines[i], file);
+        fprintf(file, "%s\n", lines[i]);
     }
     fclose(file);
     printf("Linha atualizada com sucesso!\n");
 }
 
-// Excluir uma linha específica
+// Excluir linha
 void deleteLine() {
     FILE *file = fopen(FILE_NAME, "r");
     if (!file) {
@@ -167,17 +175,16 @@ void deleteLine() {
 
     int choice;
     printf("Escolha o número da linha que deseja excluir: ");
-    scanf("%d", &choice);
-
-    if (choice < 1 || choice > count) {
+    if (scanf("%d", &choice) != 1 || choice < 1 || choice > count) {
         printf("Opção inválida.\n");
+        clearInputBuffer();
         return;
     }
 
     file = fopen(FILE_NAME, "w");
     for (int i = 0; i < count; i++) {
         if (i != choice - 1)
-            fputs(lines[i], file);
+            fprintf(file, "%s", lines[i]);
     }
     fclose(file);
     printf("Linha excluída com sucesso!\n");
@@ -195,7 +202,12 @@ int main() {
         printf("4. Excluir uma Expressão\n");
         printf("5. Sair\n");
         printf("Escolha uma opção: ");
-        scanf("%d", &option);
+
+        if (scanf("%d", &option) != 1) {
+            clearInputBuffer();
+            printf("Por favor, digite um número entre 1 e 5.\n");
+            continue;
+        }
 
         switch (option) {
             case 1:
@@ -214,7 +226,7 @@ int main() {
                 printf("Saindo...\n");
                 break;
             default:
-                printf("Opção inválida.\n");
+                printf("Opção inválida. Tente novamente.\n");
         }
 
     } while (option != 5);

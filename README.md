@@ -1,100 +1,187 @@
-
-# Verificador de Balanceamento de Parênteses, Colchetes e Chaves
-
-Este é um projeto simples em C que verifica se uma expressão contém parênteses (`()`), colchetes (`[]`) e chaves (`{}`) balanceados. Ele utiliza uma **estrutura de dados de pilha** para realizar a verificação.
+Claro! Aqui está um **README.md** completo e bem estruturado para seu projeto, ideal para ser usado no GitHub. Ele explica o funcionamento do código, suas funcionalidades, como executar e os conceitos envolvidos.
 
 ---
 
-## Funcionalidades
+# 📌 Projeto: Verificador de Balanceamento com CRUD em C
 
-- **Verificação de Balanceamento**: O programa verifica se os parênteses, colchetes e chaves estão corretamente abertos e fechados na ordem adequada.
-- **Interface Simples**: O usuário pode inserir uma expressão diretamente no terminal, e o programa informará se ela está balanceada ou não.
-- **Tratamento de Erros**: Caso a expressão esteja desbalanceada, o programa identifica o problema e informa ao usuário.
+![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)  
+![GitHub license](https://img.shields.io/github/license/TonyCarlosOlSo/Balanciador_simples)
+
+Este é um programa escrito em **linguagem C** que verifica se uma expressão contém **parênteses `()`, colchetes `[]` e chaves `{}` balanceados**, utilizando uma **estrutura de dados do tipo pilha**.
+
+Além disso, foi implementado um **CRUD básico (Create, Read, Update, Delete)** para gerenciar as expressões verificadas, armazenando-as em um arquivo `.txt` como um **banco de dados simples**.
 
 ---
 
-##  Como Inicializar o Projeto
+## 🧠 Objetivo
 
-### Pré-requisitos
-- Compilador C instalado (como `gcc`).
-- Um editor de texto ou IDE de sua preferência (opcional).
+O objetivo principal do projeto é:
 
-### Passos para Executar o Projeto
+✅ Desenvolver um sistema que:
+- Verifique o balanceamento de símbolos em expressões matemáticas ou lógicas.  
+- Permita ao usuário gerenciar o histórico dessas verificações através de um menu interativo com funcionalidades de **CRUD**.  
+- Utilize arquivos para armazenar os resultados, simulando um sistema de persistência de dados.
 
-1. **Clone o repositório**:
-   ```bash
-   git clone https://github.com/SEU_USUARIO/nome-do-repositorio.git
-   cd nome-do-repositorio
-   ```
+---
 
+## 🧩 Funcionalidades Principais
+
+### 1. **Verificação de Balanceamento**
+- Usa uma **pilha** para verificar se os pares de símbolos estão corretamente abertos e fechados.
+- Suporta os seguintes símbolos: `(`, `)`, `[`, `]`, `{`, `}`.
+- Retorna se a expressão está **balanceada** ou **desbalanceada**.
+
+### 2. **CRUD Básico**
+Implementado com uso de arquivos `.txt` como base de dados:
+
+| Função | Ação |
+|-------|------|
+| **Create (Criar)** | Adiciona novas expressões ao arquivo `resultados.txt`. |
+| **Read (Ler)** | Exibe todas as expressões já verificadas. |
+| **Update (Atualizar)** | Permite editar uma linha específica do arquivo. |
+| **Delete (Excluir)** | Remove uma entrada do histórico salvo. |
+
+### 3. **Interface Interativa**
+- Menu com opções claras e fáceis de usar.
+- O usuário pode fazer várias verificações e operações sem precisar reiniciar o programa.
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+Balanciador_simples/
+├── main.c
+├── README.md
+└── resultados.txt (gerado automaticamente)
+```
+
+- **main.c**: Código-fonte principal com todas as funções.
+- **README.md**: Este documento.
+- **resultados.txt**: Arquivo onde os resultados das verificações são armazenados (funciona como um "banco de dados").
+
+---
+
+## 🔧 Como Executar
+
+### Requisitos
+- Compilador **GCC** instalado.
+- Terminal ou prompt de comando.
+- Sistema operacional: Windows, Linux ou macOS.
+
+---
+
+### Passo a Passo
+
+1. **Abra o terminal** na pasta do projeto.
 2. **Compile o código**:
-   Use o compilador GCC para gerar o executável:
    ```bash
-   gcc -o balance_checker main.c
+   gcc main.c -o balanciador
    ```
 
 3. **Execute o programa**:
-   Após a compilação, execute o programa com:
    ```bash
-   ./balance_checker
+   ./balanciador
    ```
 
-4. **Insira uma expressão**:
-   O programa solicitará que você insira uma expressão para verificar o balanceamento. Por exemplo:
-   ```
-   Digite uma expressão para verificar o balanceamento: { [ ( ) ] } ( )
-   A expressão está balanceada.
-   ```
+4. **Siga as opções do menu** para realizar verificações ou gerenciar o histórico.
 
 ---
 
-##  Estrutura do Código
+## 💻 Exemplo de Uso
 
-O código implementa uma **pilha** para verificar o balanceamento. Aqui estão as principais funções:
+### Menu Principal
+```
+===== MENU =====
+1. Verificar Nova Expressão
+2. Listar Todas as Expressões
+3. Editar uma Expressão
+4. Excluir uma Expressão
+5. Sair
+Escolha uma opção: 
+```
 
-- **`initializeStack`**: Inicializa a pilha.
-- **`isEmpty`**: Verifica se a pilha está vazia.
-- **`isFull`**: Verifica se a pilha está cheia.
-- **`push`**: Empilha um caractere de abertura.
-- **`pop`**: Desempilha um caractere de abertura.
-- **`checkBalance`**: Verifica o balanceamento da expressão fornecida.
-- **`main`**: Função principal que lê a entrada do usuário e exibe o resultado.
+### Opção 1: Verificar Nova Expressão
+```text
+Digite uma expressão para verificar: { [ ( ) ] } ( )
+Resultado: Balanceada
+Expressão adicionada com sucesso!
+```
+
+### Opção 2: Listar Todas as Expressões
+```text
+=== Histórico de Expressões ===
+Expressão: "{ [ ( ) ] } ( )" -> Balanceada
+Expressão: "[ ( { } ]" -> Desbalanceada
+```
+
+### Opção 3: Editar uma Expressão
+```text
+1: Expressão: "{ [ ( ) ] } ( )" -> Balanceada
+Escolha o número da linha que deseja editar: 1
+Digite a nova expressão: ( ( ( ) )
+Linha atualizada com sucesso!
+```
+
+### Opção 4: Excluir uma Expressão
+```text
+1: Expressão: "( ( ( ) )"
+Escolha o número da linha que deseja excluir: 1
+Linha excluída com sucesso!
+```
 
 ---
 
-##  Exemplos de Entrada e Saída
+## 📚 Conceitos Aplicados
 
-### Exemplo 1: Expressão Balanceada
-Entrada:
-```
-Digite uma expressão para verificar o balanceamento: { [ ( ) ] } ( )
-```
-Saída:
-```
-A expressão está balanceada.
-```
+- **Estruturas de Dados** (Pilha)
+- **Manipulação de Strings**
+- **Controle de Fluxo** (`if`, `for`, `switch`)
+- **Funções** reutilizáveis e modularizadas
+- **Leitura e Escrita em Arquivos**
+- **CRUD Simples**
 
-### Exemplo 2: Expressão Desbalanceada
-Entrada:
+---
+
+## 📄 Exemplo de Saída no Arquivo `resultados.txt`
+
 ```
-Digite uma expressão para verificar o balanceamento: { [ ( ] ) }
-```
-Saída:
-```
-A expressão NÃO está balanceada.
+Expressão: "{ [ ( ) ] } ( )" -> Balanceada
+Expressão: "[ ( { } ]" -> Desbalanceada
+Expressão: "( ( ( ) )" -> Balanceada
 ```
 
 ---
 
-## Casos de Teste
+## 📎 Observações
 
-| Expressão                     | Resultado Esperado |
-|-------------------------------|--------------------|
-| `{ [ ( ) ] } ( )`            | Balanceada         |
-| `{ [ ( ] ) }`                | Desbalanceada      |
-| `( ( (`                      | Desbalanceada      |
-| `) ) )`                      | Desbalanceada      |
-| `({[]})`                     | Balanceada         |
+- O arquivo `resultados.txt` é criado automaticamente na primeira execução.
+- O programa não usa bibliotecas externas além das nativas do C.
+- Ideal para estudo de estruturas de dados e persistência de dados básica.
 
 ---
 
+## 📝 Licença
+
+Este projeto está licenciado sob a **MIT License** – veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+## 👥 Contribuições
+
+Contribuições são sempre bem-vindas! Se você quiser melhorar o projeto, adicionar novas funcionalidades ou otimizar o código, fique à vontade!
+
+---
+
+## 📬 Contato
+
+Se tiver dúvidas ou sugestões, entre em contato:
+
+- **GitHub**: [@TonyCarlosOlSo](https://github.com/TonyCarlosOlSo)
+- **Email**: tonycarlos@email.com
+
+---
+
+> ✅ Com este projeto, você tem um exemplo prático de aplicação de **pilhas**, **manipulação de arquivos** e **interação com o usuário**, tudo isso com uma interface intuitiva e fácil de entender.
+
+--- 
