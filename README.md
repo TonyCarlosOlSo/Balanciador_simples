@@ -1,7 +1,7 @@
 
 ---
 
-# 📌 Projeto: Verificador de Balanceamento com CRUD em C
+# 📌 Projeto: Verificador de Balanceamento em C
 
 ![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)  
 ![GitHub license](https://img.shields.io/github/license/TonyCarlosOlSo/Balanciador_simples)
